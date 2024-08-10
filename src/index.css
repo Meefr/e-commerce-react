@@ -1,3 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --main-color:#ffffff;
+  --second-color:#dc3545;
+  --rare-color:#212529;
+}
+
+.bg-main-color{
+  background-color: var(--main-color);
+}
+.bg-second-color{
+  background-color: var(--second-color);
+}
+.bg-rare-color{
+  background-color: var(--rare-color);
+}
+.rare-color{
+  color: var(--rare-color);
+}
+.main-color{
+  color: var(--main-color);
+}
+.second-color{
+  color: var(--second-color);
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,3 +39,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+
+
