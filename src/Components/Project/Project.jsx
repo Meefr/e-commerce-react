@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
 
 function Project({ product, addItem }) {
+
+  const handleClick = () => {
+  };
+  
   return (
-    <div className="">
+    <div className="" onClick={handleClick}>
       <div className="border rounded cursor-pointer" data-id={2}>
         <img src={product.thumbnail} className="w-full mb-2 img-btn" />
         <div className="px-2">

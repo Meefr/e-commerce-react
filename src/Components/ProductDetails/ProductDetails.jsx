@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ProductDetails({product, setCart}) {
+function ProductDetails({product, setCarts}) {
   return (
     <div className="container">
   <div className="row" id="movie-page">
