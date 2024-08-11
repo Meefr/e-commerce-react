@@ -1,7 +1,7 @@
 import React from "react";
 import "./Cart.css";
 
-function Cart({ trigger, cart, setCart }) {
+function Cart({ trigger ,setTrigger, cart, setCart }) {
   const deleteItem = (index) => {
     const tmpcart = [...cart];
     tmpcart.splice(index, 1);
@@ -26,15 +26,18 @@ function Cart({ trigger, cart, setCart }) {
 
   return (
     <div
-      className="fixed top-0 right-0 w-full md:w-1/4 h-full overflow-auto bg-main-color z-10 transition-transform transform translate-x-full md:translate-x-0"
-      id="cart-element"
+      className={`col-span-3 fixed bg-white z-50 h-screen overflow-auto w-full md:w-1/4 transform transition-transform duration-300 ease-in-out ${
+        trigger ? "translate-x-0" : "translate-x-full"
+      }`}
+      id="side-bar"
+      style={{ right: 0 }} // Ensures the div is positioned on the right side of the screen
     >
       <div className="flex justify-center items-center p-3 bg-red-600 text-white text-2xl relative">
         <h3>items</h3>
         <div
           id="close-btn"
           className="cursor-pointer absolute top-0 left-0 bg-red-600 flex justify-center items-center m-1 w-8 h-8"
-          onClick={() => trigger(false)}
+          onClick={() => setTrigger(false)}
         >
           <i className="fa-solid fa-xmark" aria-hidden="true" />
         </div>

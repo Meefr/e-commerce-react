@@ -14,6 +14,7 @@ function App() {
   const [cartBtn, setCartBtn] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [catBtn, setCatBtn] = useState(false);
 
   const handelCart = async (productId) => {
     try {
@@ -85,16 +86,20 @@ function App() {
           <Navbar
             cat={cat}
             cart={cart}
-            cartBtn={cartBtn}
             setCartBtn={setCartBtn}
+            catBtn={catBtn}
+            setCatBtn={setCatBtn}
           />
-          {cartBtn && (
-            <div className={`cart-container ${cartBtn ? "show" : ""}`}>
-              <Cart trigger={setCartBtn} cart={cart} setCart={setCart} />
-            </div>
-          )}
-          <div className="grid grid-cols-12 gap-4">
-            <Categories setCat={setCat} />
+
+          <Cart
+            trigger={cartBtn}
+            setTrigger={setCartBtn}
+            cart={cart}
+            setCart={setCart}
+          />
+
+          <div className="grid p-0 md:p-20 ">
+            <Categories setCat={setCat} trigger={catBtn} />
             <ProjectsManger
               products={projects}
               setProducts={setProjects}
