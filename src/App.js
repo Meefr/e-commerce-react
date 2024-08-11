@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import Navbar from "./Components/Navbar/Navbar";
-import ProjectsManger from "./Components/ProjectsManger/ProjectsManger";
-import { handelApi } from "./JS/handelApi";
-import Loading from "./Components/Loading/Loading";
-import Categories from "./Components/Categories/Categories";
-import Cart from "./Components/Cart/Cart";
+import Navbar from ".//Components/Navbar/Navbar";
+import ProjectsManger from ".//Components/ProjectsManger/ProjectsManger";
+import { handelApi } from ".//JS/handelApi";
+import Loading from ".//Components/Loading/Loading";
+import Categories from ".//Components/Categories/Categories";
+import Cart from ".//Components/Cart/Cart";
 
 function App() {
   const [projects, setProjects] = useState([]);
@@ -79,7 +79,6 @@ function App() {
 
   return (
     <>
-
       {loading ? (
         <Loading />
       ) : (
@@ -99,8 +98,8 @@ function App() {
             setCart={setCart}
           />
 
+          <Categories setCat={setCat} trigger={catBtn} setTrigger={setCatBtn} />
           <div className="grid p-0 md:p-20 ">
-            <Categories setCat={setCat} trigger={catBtn} />
             <ProjectsManger
               products={projects}
               setProducts={setProjects}

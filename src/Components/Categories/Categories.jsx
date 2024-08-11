@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Loading from "../Loading/Loading";
 import { handelApi } from "../../JS/handelApi";
 
-function Categories({ setCat, trigger }) {
+function Categories({ setCat, trigger , setTrigger}) {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     handelApi.getallData("products/categories", setCategories);
@@ -33,7 +33,10 @@ function Categories({ setCat, trigger }) {
                     className="py-2 px-1 text-lg content-hover rounded"
                     id={c.slug}
                     key={c.slug}
-                    onClick={() => setCat(c)}
+                    onClick={() => {
+                        setTrigger(false);
+                        setCat(c)
+                    }}
                   >
                     {c.name}
                   </li>
