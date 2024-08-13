@@ -103,7 +103,7 @@ function App() {
       ) : (
         <Routes>
           <Route
-            path=""
+            path="/"
             element={
               <>
                 <Pagintaion
