@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { handelApi } from "../../JS/handelApi";
+import Slider from "../Slider/Slider";
 
 function ProductDetails({ setCarts }) {
   const [loading, setLoading] = useState(true);
@@ -25,7 +26,7 @@ function ProductDetails({ setCarts }) {
 
   if (loading) {
     return (
-      <div className="d-flex vh-100 justify-content-center align-items-center">
+      <div className="flex h-screen justify-center items-center">
         <h3>Loading...</h3>
       </div>
     );
@@ -33,7 +34,7 @@ function ProductDetails({ setCarts }) {
 
   if (error) {
     return (
-      <div className="d-flex vh-100 justify-content-center align-items-center">
+      <div className="flex h-screen justify-center items-center">
         <div className="alert alert-danger">{error}</div>
       </div>
     );
@@ -64,27 +65,20 @@ function ProductDetails({ setCarts }) {
   const discountedPrice = (price * (1 - discountPercentage / 100)).toFixed(2);
 
   const loadImgs = (images) => {
-    return images.map((image, index) => (
-      <div
-        className={`carousel-item ${index === 0 ? "active" : ""}`}
-        key={index}
-      >
-        <img src={image} className="d-block w-100" alt="Product" />
-      </div>
-    ));
+    return <Slider images={images} />;
   };
 
   const loadReviews = (reviews) => {
     return reviews.map((review, index) => (
       <li
-        className="list-group-item d-flex justify-content-between align-items-start"
+        className="flex justify-between items-baseline border-b border-gray-200 py-2"
         key={index}
       >
-        <div className="ms-2 me-auto">
-          <div className="fw-bold">{review.reviewerName}</div>
+        <div className="flex-1">
+          <div className="font-bold">{review.reviewerName}</div>
           <p>{review.comment}</p>
         </div>
-        <span className="badge text-bg-primary rounded-pill">
+        <span className="badge bg-primary rounded-full text-white">
           {review.rating}★
         </span>
       </li>
@@ -92,61 +86,29 @@ function ProductDetails({ setCarts }) {
   };
 
   return (
-    <div className="row">
-      <div className="col-12 col-md-4 d-flex flex-column justify-content-center">
-        <div
-          id="carouselExampleAutoplaying"
-          className="carousel slide"
-          data-bs-ride="carousel"
-        >
-          <div className="carousel-inner" id="movie-imgs">
-            {loadImgs(images)}
-          </div>
-          <button
-            className="carousel-control-prev slider-button"
-            type="button"
-            data-bs-target="#carouselExampleAutoplaying"
-            data-bs-slide="prev"
-          >
-            <span
-              className="carousel-control-prev-icon slider-icon"
-              aria-hidden="true"
-            ></span>
-            <span className="visually-hidden">Previous</span>
-          </button>
-          <button
-            className="carousel-control-next slider-button"
-            type="button"
-            data-bs-target="#carouselExampleAutoplaying"
-            data-bs-slide="next"
-          >
-            <span
-              className="carousel-control-next-icon slider-icon"
-              aria-hidden="true"
-            ></span>
-            <span className="visually-hidden">Next</span>
-          </button>
-        </div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-20 px-5 md:px-20">
+      <div className="col-span-1 flex flex-col justify-center ">
+        {loadImgs(images)}
       </div>
-      <div className="col-12 col-md-8 d-flex justify-content-center flex-column gap-1">
-        <h1>{title}</h1>
-        <p>{description}</p>
-        <div className="d-flex gap-1 mb-3 align-items-center gap-5">
-          <div className="d-flex justify-content-between align-items-center gap-0">
-            <span>★</span>
-            <div className="px-2 bg-danger bg-opacity-75 rounded-2">
+      <div className="col-span-2 flex flex-col justify-center gap-4">
+        <h1 className="text-2xl font-bold">{title}</h1>
+        <p className="text-lg">{description}</p>
+        <div className="flex flex-col md:flex-row items-center gap-4 mb-4">
+          <div className="flex items-center gap-2">
+            <span className="text-yellow-500">★</span>
+            <div className="bg-red-600 text-white rounded px-2 py-1">
               {rating}
             </div>
           </div>
-          <div className="d-flex justify-content-between align-items-center gap-2">
-            <p className="fw-bold mb-0 fs-3">
+          <div className="flex items-center gap-2">
+            <p className="font-bold text-2xl">
               ${discountedPrice}{" "}
-              <small className="text-muted">
+              <small className="text-gray-500">
                 <del>${price}</del> ({discountPercentage}% off)
               </small>
             </p>
             <button
-              className="btn btn-primary btn-bg-danger"
+              className="btn btn-primary"
               onClick={() =>
                 addToCart({
                   id: Number(productId),
@@ -190,10 +152,8 @@ function ProductDetails({ setCarts }) {
           <strong>Tags:</strong> {tags.join(", ")}
         </p>
         <div>
-          <h3>Reviews</h3>
-          <ol className="list-group list-group-numbered">
-            {loadReviews(reviews)}
-          </ol>
+          <h3 className="text-xl font-semibold">Reviews</h3>
+          <ul className="list-disc pl-5">{loadReviews(reviews)}</ul>
         </div>
       </div>
     </div>

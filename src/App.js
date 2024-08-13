@@ -101,42 +101,50 @@ function App() {
       {loading ? (
         <Loading />
       ) : (
-        <>
-          <Pagintaion
-            handelApiCall={handelProjectsApiCall}
-            skip={skips}
-            setSkip={setSkips}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Pagintaion
+                  handelApiCall={handelProjectsApiCall}
+                  skip={skips}
+                  setSkip={setSkips}
+                />
+                <Cart
+                  trigger={cartBtn}
+                  setTrigger={setCartBtn}
+                  cart={cart}
+                  setCart={setCart}
+                />
+                <Categories
+                  setCat={setCat}
+                  trigger={catBtn}
+                  setTrigger={setCatBtn}
+                />
+                <div className="grid p-0">
+                  <ProjectsManger
+                    products={projects}
+                    setProducts={setProjects}
+                    addItem={handelCart}
+                  />
+                </div>
+                <Pagintaion
+                  handelApiCall={handelProjectsApiCall}
+                  skip={skips}
+                  setSkip={setSkips}
+                />
+              </>
+            }
           />
-          <Cart
-            trigger={cartBtn}
-            setTrigger={setCartBtn}
-            cart={cart}
-            setCart={setCart}
+          <Route
+            path="/:productId"
+            element={<ProductDetails setCarts={setCart} />}
           />
-          <Categories setCat={setCat} trigger={catBtn} setTrigger={setCatBtn} />
-          <div className="grid p-0">
-            <ProjectsManger
-              products={projects}
-              setProducts={setProjects}
-              addItem={handelCart}
-            />
-          </div>
-          <Pagintaion
-            handelApiCall={handelProjectsApiCall}
-            skip={skips}
-            setSkip={setSkips}
-          />
-        </>
+          {/* Add other routes as needed */}
+        </Routes>
       )}
       {error && <p>Error: {error.message}</p>}
-      <Routes>
-        <Route
-          path="/:id"
-          element={<ProductDetails setCarts={setCart} />}
-        />
-        {/* <Route path="/:id" element={<Project />} /> */}
-        {/* Add other routes as needed */}
-      </Routes>
     </Router>
   );
 }

@@ -12,6 +12,8 @@ export const handelApi = {
     if (startLoading && typeof startLoading === "function") startLoading();
 
     try {      
+      console.log(`${source}${endpoint}${params}`);
+      
       const res = await fetch(`${source}${endpoint}${params}`);
       if (!res.ok) {
         throw new Error("Something went wrong with the network request.");

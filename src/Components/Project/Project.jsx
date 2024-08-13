@@ -38,7 +38,7 @@ function Project({ product, addItem }) {
               Add To Cart
             </button>
 
-            <Link to={`/product/${product.id}`}>
+            <Link to={`/${product.id}`}>
               <button className="btn btn-primary">View Details</button>
             </Link>
           </div>
