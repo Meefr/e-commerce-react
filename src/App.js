@@ -92,7 +92,7 @@ function App() {
   }, [cat]);
 
   return (
-    <BrowserRouter>
+    <Router basename="/e-commerce-react">
       <Navbar
         cat={cat}
         cart={cart}
@@ -156,7 +156,7 @@ function App() {
         </Routes>
       )}
       {error && <p>Error: {error.message}</p>}
-    </BrowserRouter>
+    </Router>
   );
 }
 
