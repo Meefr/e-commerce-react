@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import Navbar from ".//Components/Navbar/Navbar";
-import ProjectsManger from ".//Components/ProjectsManger/ProjectsManger";
-import { handelApi } from ".//JS/handelApi";
-import Loading from ".//Components/Loading/Loading";
-import Categories from ".//Components/Categories/Categories";
-import Cart from ".//Components/Cart/Cart";
+import Navbar from "./Components/Navbar/Navbar";
+import ProjectsManger from "./Components/ProjectsManger/ProjectsManger";
+import { handelApi } from "./JS/handelApi";
+import Loading from "./Components/Loading/Loading";
+import Categories from "./Components/Categories/Categories";
+import Cart from "./Components/Cart/Cart";
+import Slider from "./Components/Slider/Slider";
+import Pagintaion from "./Components/Pagination/Pagintaion";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ProductDetails from "./Components/ProductDetails/ProductDetails";
+import Project from "./Components/Project/Project";
 
 function App() {
   const [projects, setProjects] = useState([]);
@@ -15,6 +20,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [catBtn, setCatBtn] = useState(false);
+  const [skips, setSkips] = useState(0);
 
   const handelCart = async (productId) => {
     try {
@@ -56,15 +62,21 @@ function App() {
     }
   };
 
-  useEffect(() => {
+  const handelProjectsApiCall = () => {
     handelApi.getallData(
       "products",
       setProjects,
       setError,
       () => setLoading(true),
-      () => setLoading(false)
+      () => setLoading(false),
+      `?limit=12&skip=${12 * skips}`
     );
-  }, []);
+  };
+
+  useEffect(() => {
+    handelProjectsApiCall();
+  }, [skips]);
+
   useEffect(() => {
     if (cat) {
       handelApi.getallData(
@@ -78,38 +90,54 @@ function App() {
   }, [cat]);
 
   return (
-    <>
+    <Router>
+      <Navbar
+        cat={cat}
+        cart={cart}
+        setCartBtn={setCartBtn}
+        catBtn={catBtn}
+        setCatBtn={setCatBtn}
+      />
       {loading ? (
         <Loading />
       ) : (
         <>
-          <Navbar
-            cat={cat}
-            cart={cart}
-            setCartBtn={setCartBtn}
-            catBtn={catBtn}
-            setCatBtn={setCatBtn}
+          <Pagintaion
+            handelApiCall={handelProjectsApiCall}
+            skip={skips}
+            setSkip={setSkips}
           />
-
           <Cart
             trigger={cartBtn}
             setTrigger={setCartBtn}
             cart={cart}
             setCart={setCart}
           />
-
           <Categories setCat={setCat} trigger={catBtn} setTrigger={setCatBtn} />
-          <div className="grid p-0 md:p-20 ">
+          <div className="grid p-0">
             <ProjectsManger
               products={projects}
               setProducts={setProjects}
               addItem={handelCart}
             />
           </div>
+          <Pagintaion
+            handelApiCall={handelProjectsApiCall}
+            skip={skips}
+            setSkip={setSkips}
+          />
         </>
       )}
       {error && <p>Error: {error.message}</p>}
-    </>
+      <Routes>
+        <Route
+          path="/:id"
+          element={<ProductDetails setCarts={setCart} />}
+        />
+        {/* <Route path="/:id" element={<Project />} /> */}
+        {/* Add other routes as needed */}
+      </Routes>
+    </Router>
   );
 }
 

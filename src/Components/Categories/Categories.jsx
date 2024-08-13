@@ -10,7 +10,7 @@ function Categories({ setCat, trigger , setTrigger}) {
 
   return (
     <aside
-      className={`col-span-3 fixed my-10 bg-white w-full md:w-1/4 transform transition-transform duration-300 ease-in-out ${
+      className={`col-span-3 top-0 fixed my-10 bg-white w-full md:w-1/4 transform transition-transform duration-300 ease-in-out ${
         trigger ? "translate-x-0" : "-translate-x-full"
       }`}
       id="side-bar"

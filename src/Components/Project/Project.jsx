@@ -1,13 +1,10 @@
-import React, { useState } from 'react'
+import React from "react";
+import { Link } from "react-router-dom";
 
 function Project({ product, addItem }) {
-
-  const handleClick = () => {
-  };
-  
   return (
-    <div className="" onClick={handleClick}>
-      <div className="border rounded cursor-pointer" data-id={2}>
+    <div className="">
+      <div className="border rounded cursor-pointer">
         <img src={product.thumbnail} className="w-full mb-2 img-btn" />
         <div className="px-2">
           <div className="">
@@ -29,11 +26,21 @@ function Project({ product, addItem }) {
 
             <button
               className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
-              data-product='{"id":2,"title":"Eyeshadow Palette with Mirror","image":"https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png","price":19.99,"stock":44}'
+              data-product={JSON.stringify({
+                id: product.id,
+                title: product.title,
+                image: product.thumbnail,
+                price: product.price,
+                stock: product.stock,
+              })}
               onClick={() => addItem(product.id)}
             >
-              Add To Chart
+              Add To Cart
             </button>
+
+            <Link to={`/product/${product.id}`}>
+              <button className="btn btn-primary">View Details</button>
+            </Link>
           </div>
         </div>
       </div>
@@ -41,4 +48,4 @@ function Project({ product, addItem }) {
   );
 }
 
-export default Project
+export default Project;
