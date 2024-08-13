@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 function Navbar({ cat, cart, setCartBtn, catBtn, setCatBtn }) {
   return (
     <div className="flex py-4 bg-rare-color text-gray-50 text-2xl justify-between px-6 sm:px-10 fixed w-screen z-30">
-      <Link to={`/`}>
+      <Link to={``}>
         <div>
           <i class="fa-solid fa-bars" onClick={() => setCatBtn(!catBtn)}></i>
-          <a className="mx-4 mx-md-5" href="#">
+          <a className="mx-4 mx-md-5" href="">
             <i
               className="fa-solid fa-shop second-color "
               aria-hidden="true"
