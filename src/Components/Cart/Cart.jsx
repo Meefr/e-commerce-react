@@ -1,7 +1,7 @@
 import React from "react";
 import "./Cart.css";
 
-function Cart({ trigger ,setTrigger, cart, setCart }) {
+function Cart({ trigger, setTrigger, cart, setCart }) {
   const deleteItem = (index) => {
     const tmpcart = [...cart];
     tmpcart.splice(index, 1);
@@ -22,6 +22,11 @@ function Cart({ trigger ,setTrigger, cart, setCart }) {
       tmpcart[index].total -= tmpcart[index].price;
       setCart(tmpcart);
     } else deleteItem(index);
+  };
+  const calcTotal = () => {
+    return cart.reduce((sum, product) => {
+      return sum + product.total;
+    }, 0);
   };
 
   return (
@@ -44,6 +49,10 @@ function Cart({ trigger ,setTrigger, cart, setCart }) {
       </div>
       <div className="container mx-auto">
         <div className="row overflow-y-auto">
+          {cart.length?<div className="text-xl py-4 justify-center flex gap-3">
+            <p>total:</p>
+            <p>{calcTotal().toFixed(2)}</p>
+          </div>:<></>}
           <div className="col-12 flex justify-center items-center p-3">
             {cart.length ? (
               <div class="border w-full p-4 " id="cart-list">
