@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { handelApi } from "../../JS/handelApi";
 import Slider from "../Slider/Slider";
+import AnimatedPage from "../AnimatedPage/AnimatedPage";
 
 function ProductDetails({ setCarts, iconTrigger}) {
   const [loading, setLoading] = useState(true);
@@ -86,77 +87,79 @@ function ProductDetails({ setCarts, iconTrigger}) {
   };
   iconTrigger(false);
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-20 px-5 md:px-20">
-      <div className="col-span-1 flex flex-col justify-center ">
-        {loadImgs(images)}
-      </div>
-      <div className="col-span-2 flex flex-col justify-center gap-4">
-        <h1 className="text-2xl font-bold">{title}</h1>
-        <p className="text-lg">{description}</p>
-        <div className="flex flex-col md:flex-row items-center gap-4 mb-4">
-          <div className="flex items-center gap-2">
-            <span className="text-yellow-500">★</span>
-            <div className="bg-red-600 text-white rounded px-2 py-1">
-              {rating}
+    <AnimatedPage>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-20 px-5 md:px-20">
+        <div className="col-span-1 flex flex-col justify-center ">
+          {loadImgs(images)}
+        </div>
+        <div className="col-span-2 flex flex-col justify-center gap-4">
+          <h1 className="text-2xl font-bold">{title}</h1>
+          <p className="text-lg">{description}</p>
+          <div className="flex flex-col md:flex-row items-center gap-4 mb-4">
+            <div className="flex items-center gap-2">
+              <span className="text-yellow-500">★</span>
+              <div className="bg-red-600 text-white rounded px-2 py-1">
+                {rating}
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <p className="font-bold text-2xl">
+                ${discountedPrice}{" "}
+                <small className="text-gray-500">
+                  <del>${price}</del> ({discountPercentage}% off)
+                </small>
+              </p>
+              <button
+                className="btn btn-primary"
+                onClick={() =>
+                  addToCart({
+                    id: Number(productId),
+                    title,
+                    image: images[0],
+                    price,
+                    stock,
+                  })
+                }
+              >
+                Add To Cart
+              </button>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <p className="font-bold text-2xl">
-              ${discountedPrice}{" "}
-              <small className="text-gray-500">
-                <del>${price}</del> ({discountPercentage}% off)
-              </small>
-            </p>
-            <button
-              className="btn btn-primary"
-              onClick={() =>
-                addToCart({
-                  id: Number(productId),
-                  title,
-                  image: images[0],
-                  price,
-                  stock,
-                })
-              }
-            >
-              Add To Cart
-            </button>
+          <p>
+            <strong>Brand:</strong> {brand}
+          </p>
+          <p>
+            <strong>SKU:</strong> {sku}
+          </p>
+          <p>
+            <strong>Weight:</strong> {weight}g
+          </p>
+          <p>
+            <strong>Dimensions:</strong> {dimensions.width} x{" "}
+            {dimensions.height} x {dimensions.depth} cm
+          </p>
+          <p>
+            <strong>Warranty Information:</strong> {warrantyInformation}
+          </p>
+          <p>
+            <strong>Shipping Information:</strong> {shippingInformation}
+          </p>
+          <p>
+            <strong>Availability Status:</strong> {availabilityStatus}
+          </p>
+          <p>
+            <strong>Return Policy:</strong> {returnPolicy}
+          </p>
+          <p>
+            <strong>Tags:</strong> {tags.join(", ")}
+          </p>
+          <div>
+            <h3 className="text-xl font-semibold">Reviews</h3>
+            <ul className="list-disc pl-5">{loadReviews(reviews)}</ul>
           </div>
         </div>
-        <p>
-          <strong>Brand:</strong> {brand}
-        </p>
-        <p>
-          <strong>SKU:</strong> {sku}
-        </p>
-        <p>
-          <strong>Weight:</strong> {weight}g
-        </p>
-        <p>
-          <strong>Dimensions:</strong> {dimensions.width} x {dimensions.height}{" "}
-          x {dimensions.depth} cm
-        </p>
-        <p>
-          <strong>Warranty Information:</strong> {warrantyInformation}
-        </p>
-        <p>
-          <strong>Shipping Information:</strong> {shippingInformation}
-        </p>
-        <p>
-          <strong>Availability Status:</strong> {availabilityStatus}
-        </p>
-        <p>
-          <strong>Return Policy:</strong> {returnPolicy}
-        </p>
-        <p>
-          <strong>Tags:</strong> {tags.join(", ")}
-        </p>
-        <div>
-          <h3 className="text-xl font-semibold">Reviews</h3>
-          <ul className="list-disc pl-5">{loadReviews(reviews)}</ul>
-        </div>
       </div>
-    </div>
+    </AnimatedPage>
   );
 }
 

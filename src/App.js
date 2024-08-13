@@ -11,6 +11,7 @@ import Pagintaion from "./Components/Pagination/Pagintaion";
 import { BrowserRouter as Router, Route, Routes, HashRouter, BrowserRouter } from "react-router-dom";
 import ProductDetails from "./Components/ProductDetails/ProductDetails";
 import Project from "./Components/Project/Project";
+import AnimatedPage from "./Components/AnimatedPage/AnimatedPage";
 
 function App() {
   const [projects, setProjects] = useState([]);
@@ -108,7 +109,7 @@ function App() {
           <Route
             path=""
             element={
-              <>
+              <AnimatedPage>
                 <Pagintaion
                   handelApiCall={handelProjectsApiCall}
                   skip={skips}
@@ -137,7 +138,7 @@ function App() {
                   skip={skips}
                   setSkip={setSkips}
                 />
-              </>
+              </AnimatedPage>
             }
           />
           <Route
