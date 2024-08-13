@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { handelApi } from "../../JS/handelApi";
 import Slider from "../Slider/Slider";
 
-function ProductDetails({ setCarts }) {
+function ProductDetails({ setCarts, iconTrigger}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [productDetails, setProductDetails] = useState(null);
@@ -84,7 +84,7 @@ function ProductDetails({ setCarts }) {
       </li>
     ));
   };
-
+  iconTrigger(false);
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-20 px-5 md:px-20">
       <div className="col-span-1 flex flex-col justify-center ">

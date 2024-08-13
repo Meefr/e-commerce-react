@@ -21,6 +21,7 @@ function App() {
   const [error, setError] = useState(null);
   const [catBtn, setCatBtn] = useState(false);
   const [skips, setSkips] = useState(0);
+  const [menuIconTrigger,setMenuIconTrigger] = useState(true);
 
   const handelCart = async (productId) => {
     try {
@@ -90,13 +91,15 @@ function App() {
   }, [cat]);
 
   return (
-    <BrowserRouter>
+    <Router>
       <Navbar
         cat={cat}
         cart={cart}
         setCartBtn={setCartBtn}
         catBtn={catBtn}
         setCatBtn={setCatBtn}
+        iconTrigger={menuIconTrigger}
+        setIconTrigger={setMenuIconTrigger}
       />
       {loading ? (
         <Loading />
@@ -139,13 +142,20 @@ function App() {
           />
           <Route
             path=":productId"
-            element={<ProductDetails setCarts={setCart} />}
+            element={
+              <>
+                <ProductDetails
+                  setCarts={setCart}
+                  iconTrigger={setMenuIconTrigger}
+                />
+              </>
+            }
           />
           {/* Add other routes as needed */}
         </Routes>
       )}
       {error && <p>Error: {error.message}</p>}
-    </BrowserRouter>
+    </Router>
   );
 }
 
