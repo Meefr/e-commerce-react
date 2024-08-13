@@ -103,7 +103,7 @@ function App() {
       ) : (
         <Routes>
           <Route
-            path=""
+            path="//"
             element={
               <>
                 <Pagintaion
@@ -138,7 +138,7 @@ function App() {
             }
           />
           <Route
-            path="/:productId"
+            path="//:productId"
             element={<ProductDetails setCarts={setCart} />}
           />
           {/* Add other routes as needed */}
