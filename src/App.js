@@ -8,7 +8,7 @@ import Categories from "./Components/Categories/Categories";
 import Cart from "./Components/Cart/Cart";
 import Slider from "./Components/Slider/Slider";
 import Pagintaion from "./Components/Pagination/Pagintaion";
-import { BrowserRouter as Router, Route, Routes, HashRouter } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, HashRouter, BrowserRouter } from "react-router-dom";
 import ProductDetails from "./Components/ProductDetails/ProductDetails";
 import Project from "./Components/Project/Project";
 
@@ -90,7 +90,7 @@ function App() {
   }, [cat]);
 
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Navbar
         cat={cat}
         cart={cart}
@@ -145,7 +145,7 @@ function App() {
         </Routes>
       )}
       {error && <p>Error: {error.message}</p>}
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
