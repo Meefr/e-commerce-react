@@ -107,7 +107,7 @@ function App() {
       ) : (
         <Routes>
           <Route
-            path=""
+            path="/"
             element={
               <AnimatedPage>
                 <Pagintaion
@@ -142,7 +142,7 @@ function App() {
             }
           />
           <Route
-            path=":productId"
+            path="/:productId"
             element={
               <>
                 <ProductDetails
