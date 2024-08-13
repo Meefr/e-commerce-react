@@ -22,7 +22,7 @@ function Navbar({
           ""
         )}
 
-        <Link to={``}>
+        <Link to={`/`}>
           <span onClick={() => setIconTrigger(true)}>
             <i
               className="fa-solid fa-shop second-color "
