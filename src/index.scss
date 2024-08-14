@@ -6,6 +6,7 @@
   --main-color:#ffffff;
   --second-color:#dc3545;
   --rare-color:#212529;
+  --text-color:#212529;
 }
 /* Hide scrollbar by default */
 ::-webkit-scrollbar {
@@ -83,6 +84,9 @@
   color: var(--second-color) !important;
 }
 body {
+  color: var(--text-color);
+  background-color: var(--main-color);
+  transition: all 0.5s ease-in-out;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
