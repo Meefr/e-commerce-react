@@ -1,5 +1,4 @@
 const source = "https://dummyjson.com/";
-
 export const handelApi = {
   getallData: async (
     endpoint,
@@ -22,6 +21,7 @@ export const handelApi = {
       data = (data.products?data.products:data);
 
       if (success && typeof success === "function") success(data);
+
       return data;
     } catch (error) {
       console.error("Error fetching data:", error);

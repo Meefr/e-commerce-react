@@ -13,6 +13,7 @@ import ProductDetails from "./Components/ProductDetails/ProductDetails";
 import Project from "./Components/Project/Project";
 import AnimatedPage from "./Components/AnimatedPage/AnimatedPage";
 import Options from "./Components/Options/Options";
+import useLocalStorage from "./JS/handelLocalStorage";
 
 function App() {
   const [projects, setProjects] = useState([]);
@@ -121,7 +122,9 @@ function App() {
                   trigger={cartBtn}
                   setTrigger={setCartBtn}
                   cart={cart}
-                  setCart={setCart}
+                  setCart={
+                    setCart
+                  }
                 />
                 <Categories
                   setCat={setCat}

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Cart.css";
 import Notification from "../Notifications/Notification";
+import useLocalStorage from "../../JS/handelLocalStorage";
 
 function Cart({ trigger, setTrigger, cart, setCart }) {
   const deleteItem = (index) => {
@@ -22,9 +23,14 @@ function Cart({ trigger, setTrigger, cart, setCart }) {
       tmpcart[index].quantity--;
       tmpcart[index].total -= tmpcart[index].price;
       setCart(tmpcart);
-    } else notification.createNotification("error", `${tmpcart[index].title}`, () => {
-      deleteItem(index);
-    })();  ;
+    } else
+      notification.createNotification(
+        "error",
+        `${tmpcart[index].title}`,
+        () => {
+          deleteItem(index);
+        }
+      )();
   };
   const calcTotal = () => {
     return cart.reduce((sum, product) => {
@@ -32,6 +38,13 @@ function Cart({ trigger, setTrigger, cart, setCart }) {
     }, 0);
   };
   const notification = new Notification();
+  
+  const localStorageCart = useLocalStorage("cart", cart);
+  useEffect(() => {
+    if (localStorageCart && cart.length === 0) {
+      setCart(localStorageCart);
+    }
+  }, []);
   return (
     <div
       className={` top-0  col-span-3 fixed bg-white z-50 h-screen overflow-auto w-full md:w-1/4 transform transition-transform duration-300 ease-in-out ${
@@ -52,10 +65,14 @@ function Cart({ trigger, setTrigger, cart, setCart }) {
       </div>
       <div className="container mx-auto">
         <div className="row overflow-y-auto">
-          {cart.length?<div className="text-xl py-4 justify-center flex gap-3">
-            <p>total:</p>
-            <p>{calcTotal().toFixed(2)}</p>
-          </div>:<></>}
+          {cart.length ? (
+            <div className="text-xl py-4 justify-center flex gap-3">
+              <p>total:</p>
+              <p>{calcTotal().toFixed(2)}</p>
+            </div>
+          ) : (
+            <></>
+          )}
           <div className="col-12 flex justify-center items-center p-3">
             {cart.length ? (
               <div class="border w-full p-4 " id="cart-list">
@@ -72,10 +89,10 @@ function Cart({ trigger, setTrigger, cart, setCart }) {
                           notification.createNotification(
                             "error",
                             `${c.title}`,
-                            ()=>{
-                              deleteItem(i)
+                            () => {
+                              deleteItem(i);
                             }
-                          )();  
+                          )();
                         }}
                       />
                     </div>
