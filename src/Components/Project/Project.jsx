@@ -6,7 +6,7 @@ function Project({ product, addItem }) {
   const notification = new Notification();
 
   return (
-    <div className="">
+    <>
       <div className="relative group border rounded cursor-pointer overflow-hidden">
         <img src={product.thumbnail} className="w-full mb-2 img-btn" />
         <div className="px-2">
@@ -29,7 +29,7 @@ function Project({ product, addItem }) {
           <div className="transition-transform duration-500 transform translate-y-10 group-hover:translate-y-0">
             <p className="text-white text-2xl font-bold">{product.price}</p>
           </div>
-          <div className="flex flex-col gap-2 mt-2 transition-transform duration-700 transform translate-y-10 group-hover:translate-y-0">
+          <div className="flex flex-col gap-2 mt-2 ">
             <button
               className="transition-transform duration-700 transform translate-y-10 group-hover:translate-y-0 text-white hover:text-white border border-white hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               data-product={JSON.stringify({
@@ -57,7 +57,8 @@ function Project({ product, addItem }) {
           </div>
         </div>
       </div>
-    </div>
+      <Notification />
+    </>
   );
 }
 

@@ -47,13 +47,13 @@ function Cart({ trigger, setTrigger, cart, setCart }) {
   }, []);
   return (
     <div
-      className={` top-0  col-span-3 fixed bg-white z-50 h-screen overflow-auto w-full md:w-1/4 transform transition-transform duration-300 ease-in-out ${
+      className={`border border-white top-0  col-span-3 fixed bg-main-color z-50 h-screen overflow-auto w-full md:w-1/4 transform transition-transform duration-300 ease-in-out ${
         trigger ? "translate-x-0" : "translate-x-full"
       }`}
       id="side-bar"
       style={{ right: 0 }} // Ensures the div is positioned on the right side of the screen
     >
-      <div className="flex justify-center items-center p-3 bg-red-600 text-white text-2xl relative">
+      <div className="flex justify-center items-center p-3 bg-red-600 main-color text-2xl relative">
         <h3>items</h3>
         <div
           id="close-btn"

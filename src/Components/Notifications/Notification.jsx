@@ -7,7 +7,7 @@ import {
 } from "react-notifications";
 
 class Notification extends React.Component {
-  createNotification = (type, msg, func) => {
+  createNotification = (type, msg, func) => {   
     return () => {
       switch (type) {
         case "info":
