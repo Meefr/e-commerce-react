@@ -7,10 +7,10 @@ function Project({ product, addItem }) {
 
   return (
     <div className="">
-      <div className="border rounded cursor-pointer">
+      <div className="relative group border rounded cursor-pointer overflow-hidden">
         <img src={product.thumbnail} className="w-full mb-2 img-btn" />
         <div className="px-2">
-          <div className="">
+          <div>
             <h3 className="text-lg second-color">{product.title}</h3>
             <p>{product.description}</p>
           </div>
@@ -24,11 +24,14 @@ function Project({ product, addItem }) {
               {product.rating}
             </p>
           </div>
-          <div className="flex justify-around items-center flex-nowrap gap-1 py-2">
-            <p className="m-0 fw-bold fs-3">{product.price}</p>
-
+        </div>
+        <div className="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-full group-hover:translate-y-0">
+          <div className="transition-transform duration-500 transform translate-y-10 group-hover:translate-y-0">
+            <p className="text-white text-2xl font-bold">{product.price}</p>
+          </div>
+          <div className="flex flex-col gap-2 mt-2 transition-transform duration-700 transform translate-y-10 group-hover:translate-y-0">
             <button
-              className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
+              className="transition-transform duration-700 transform translate-y-10 group-hover:translate-y-0 text-white hover:text-white border border-white hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               data-product={JSON.stringify({
                 id: product.id,
                 title: product.title,
@@ -39,17 +42,17 @@ function Project({ product, addItem }) {
               onClick={() => {
                 notification.createNotification(
                   "success",
-                  `Product ${product.title} added`,
+                  `Product ${product.title} added`
                 )();
                 addItem(product.id);
               }}
             >
               Add To Cart
             </button>
-            <Notification />
-
             <Link to={`/${product.id}`}>
-              <button className="btn btn-primary">View Details</button>
+              <button className="transition-transform duration-1000 transform translate-y-10 group-hover:translate-y-0 bg-red-800 text-white hover:text-red-700 border border-red-700 hover:bg-transparent focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                View Details
+              </button>
             </Link>
           </div>
         </div>
