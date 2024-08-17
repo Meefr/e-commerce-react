@@ -1,5 +1,6 @@
 import React from "react";
 import "./Cart.css";
+import Notification from "../Notifications/Notification";
 
 function Cart({ trigger, setTrigger, cart, setCart }) {
   const deleteItem = (index) => {
@@ -21,14 +22,16 @@ function Cart({ trigger, setTrigger, cart, setCart }) {
       tmpcart[index].quantity--;
       tmpcart[index].total -= tmpcart[index].price;
       setCart(tmpcart);
-    } else deleteItem(index);
+    } else notification.createNotification("error", `${tmpcart[index].title}`, () => {
+      deleteItem(index);
+    })();  ;
   };
   const calcTotal = () => {
     return cart.reduce((sum, product) => {
       return sum + product.total;
     }, 0);
   };
-
+  const notification = new Notification();
   return (
     <div
       className={` top-0  col-span-3 fixed bg-white z-50 h-screen overflow-auto w-full md:w-1/4 transform transition-transform duration-300 ease-in-out ${
@@ -65,7 +68,15 @@ function Cart({ trigger, setTrigger, cart, setCart }) {
                       <i
                         className="fa-solid fa-xmark text-gray-500"
                         aria-hidden="true"
-                        onClick={() => deleteItem(i)}
+                        onClick={() => {
+                          notification.createNotification(
+                            "error",
+                            `${c.title}`,
+                            ()=>{
+                              deleteItem(i)
+                            }
+                          )();  
+                        }}
                       />
                     </div>
                     <div className="w-1/4">

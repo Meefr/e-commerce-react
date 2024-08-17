@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Notification from "../Notifications/Notification";
 
 function Project({ product, addItem }) {
+  const notification = new Notification();
+
   return (
     <div className="">
       <div className="border rounded cursor-pointer">
@@ -33,10 +36,17 @@ function Project({ product, addItem }) {
                 price: product.price,
                 stock: product.stock,
               })}
-              onClick={() => addItem(product.id)}
+              onClick={() => {
+                notification.createNotification(
+                  "success",
+                  `Product ${product.title} added`,
+                )();
+                addItem(product.id);
+              }}
             >
               Add To Cart
             </button>
+            <Notification />
 
             <Link to={`/${product.id}`}>
               <button className="btn btn-primary">View Details</button>
