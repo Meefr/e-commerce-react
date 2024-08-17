@@ -14,6 +14,8 @@ import Project from "./Components/Project/Project";
 import AnimatedPage from "./Components/AnimatedPage/AnimatedPage";
 import Options from "./Components/Options/Options";
 import useLocalStorage from "./JS/handelLocalStorage";
+import ErrorPage from "./pages/ErrorPage";
+import Posts from "./pages/Posts";
 
 function App() {
   const [projects, setProjects] = useState([]);
@@ -122,9 +124,7 @@ function App() {
                   trigger={cartBtn}
                   setTrigger={setCartBtn}
                   cart={cart}
-                  setCart={
-                    setCart
-                  }
+                  setCart={setCart}
                 />
                 <Categories
                   setCat={setCat}
@@ -149,15 +149,14 @@ function App() {
           <Route
             path="/:productId"
             element={
-              <>
-                <ProductDetails
-                  setCarts={setCart}
-                  iconTrigger={setMenuIconTrigger}
-                />
-              </>
+              <ProductDetails
+                setCarts={setCart}
+                iconTrigger={setMenuIconTrigger}
+              />
             }
           />
-          {/* Add other routes as needed */}
+          <Route path="*" element={<ErrorPage />} />
+          <Route path="/posts" element= {<Posts/>}/>
         </Routes>
       )}
       {error && <p>Error: {error.message}</p>}
