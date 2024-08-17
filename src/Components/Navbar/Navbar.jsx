@@ -1,6 +1,7 @@
 import React from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
+import PlayOnce from "../Notifications/AnimatedIcons";
 function Navbar({
   cat,
   cart,
@@ -36,18 +37,21 @@ function Navbar({
       <div className="flex justify-end px-4 ">
         <ul className="">
           <li className="" onClick={() => setCartBtn(true)}>
-            <i
+            {/* <i
               className="fa-solid fa-cart-shopping relative"
               id="cart-btn"
               aria-hidden="true"
-            >
+            > */}
+            <div className="relative">
+              <PlayOnce />
               <span
-                className=" absolute -top-2 -right-3 start-50 text-sm second-color bg-black"
+                className=" absolute -top-2 -right-3 start-50 text-sm second-color font-bold"
                 id="cart-number"
               >
                 {cart ? cart.length : 0}
               </span>
-            </i>
+            </div>
+            {/* </i> */}
           </li>
         </ul>
       </div>
