@@ -1,10 +1,24 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import PlayOnce from "../Notifications/AnimatedIcons";
 import { AppContext } from "../../Providers/AppProvider";
 
 function Navbar() {
+  const [selected,setSelected] = useState("Home");
+  const location = useLocation();
+  useEffect(()=>{
+    switch (location.pathname) {
+      case "/products":
+        setSelected("Products");
+        break;
+      case "/posts":
+        setSelected("Posts");
+        break;
+      default:
+        setSelected("Home");
+    }
+  },[location.pathname])
   const {
     cat,
     cart,
@@ -39,13 +53,31 @@ function Navbar() {
       </div>
 
       <div className="hidden md:flex space-x-4 justify-center align-baseline h-full">
-        <Link to="/" className="hover:text-gray-300">
+        <Link
+          to="/"
+          className={`hover:text-gray-300 ${
+            selected === "Home" ? "second-color font-bold" : ""
+          }`}
+          onClick={() => setSelected("Home")}
+        >
           Home
         </Link>
-        <Link to="/products" className="hover:text-gray-300">
+        <Link
+          to="/products"
+          className={`hover:text-gray-300 ${
+            selected === "Products" ? "second-color font-bold" : ""
+          }`}
+          onClick={() => setSelected("Products")}
+        >
           Products
         </Link>
-        <Link to="/posts" className="hover:text-gray-300">
+        <Link
+          to="/posts"
+          className={`hover:text-gray-300 ${
+            selected === "Posts" ? "second-color font-bold" : ""
+          }`}
+          onClick={() => setSelected("Posts")}
+        >
           Posts
         </Link>
       </div>
@@ -59,25 +91,31 @@ function Navbar() {
             <PlayOnce imgname={"wired-outline-56-document.json"} />
           </button>
           {menuOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white text-gray-900 rounded-md shadow-lg">
+            <div className="p-5 absolute right-0 mt-2 w-48 bg-white text-gray-900 rounded-md shadow-lg">
               <Link
                 to="/"
-                className="block px-4 py-2 hover:bg-gray-200"
-                onClick={() => setMenuOpen(false)}
+                className={`block hover:text-gray-300 ${
+                  selected === "Home" ? "second-color font-bold" : ""
+                }`}
+                onClick={() => setSelected("Home")}
               >
                 Home
               </Link>
               <Link
                 to="/products"
-                className="block px-4 py-2 hover:bg-gray-200"
-                onClick={() => setMenuOpen(false)}
+                className={`block hover:text-gray-300 ${
+                  selected === "Products" ? "second-color font-bold" : ""
+                }`}
+                onClick={() => setSelected("Products")}
               >
                 Products
               </Link>
               <Link
                 to="/posts"
-                className="block px-4 py-2 hover:bg-gray-200"
-                onClick={() => setMenuOpen(false)}
+                className={`block hover:text-gray-300 ${
+                  selected === "Posts" ? "second-color font-bold" : ""
+                }`}
+                onClick={() => setSelected("Posts")}
               >
                 Posts
               </Link>
