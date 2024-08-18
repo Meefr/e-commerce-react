@@ -6,9 +6,7 @@ export default function useLocalStorage(key, customeData) {
     return localStorageData || customeData;
   });
   
-  useEffect(() => {
-    console.log(customeData);
-    
+  useEffect(() => {    
       if (customeData !== null) {
         localStorage.setItem(key, JSON.stringify(customeData));
       }

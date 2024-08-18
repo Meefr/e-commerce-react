@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import AnimatedPage from "../AnimatedPage/AnimatedPage";
+import useLocalStorage from "../../JS/handelLocalStorage";
 
 function Options() {
   const [dark, setDark] = useState(false);
+  const data =  useLocalStorage("darkMode",dark);
   useEffect(() => {
     if (dark) {
       document.documentElement.style.setProperty("--main-color", "black");
@@ -12,6 +14,11 @@ function Options() {
       document.documentElement.style.setProperty("--text-color", "#212529");
     }
   }, [dark]);
+  useEffect(() => {
+    if (data) {
+      setDark(data);
+    }
+  }, []);
   return (
     <div className="fixed right-0 md:right-20  top-20 z-40 cursor-pointer">
       <i

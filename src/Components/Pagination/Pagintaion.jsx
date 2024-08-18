@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { AppContext } from "../../Providers/AppProvider";
 
-function Pagination() {
-  const {skips , setSkips} = useContext(AppContext);
+function Pagination({skips,setSkips}) {
+  // const {skips , setSkips} = useContext(AppContext);
 
     const handleClick = (newSkip) => {
       if (newSkip < 0 || newSkip > 13) return; 

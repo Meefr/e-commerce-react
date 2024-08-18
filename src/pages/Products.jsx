@@ -12,10 +12,6 @@ function Products() {
   const {
     projects,
     setProjects,
-    cart,
-    setCart,
-    cartBtn,
-    setCartBtn,
     cat,
     setCat,
     catBtn,
@@ -27,6 +23,8 @@ function Products() {
     setLoading,
     error,
     setError,
+    setIconTrigger,
+    iconTrigger,
   } = useContext(AppContext);
 
   const handelProjectsApiCall = () => {
@@ -55,11 +53,16 @@ function Products() {
       );
     }
   }, [cat]);
-
+  useEffect(() => {
+    setIconTrigger(true);
+    return () => {
+      setIconTrigger(false);
+    };
+  }, [setIconTrigger]);
   return (
     <AnimatedPage>
-      <Pagination />
-      <Cart/>
+      <Pagination setSkips={setSkips} skips={skips}/>
+      <Cart />
       <Categories setCat={setCat} trigger={catBtn} setTrigger={setCatBtn} />
       <div className="grid p-0">
         <ProjectsManger

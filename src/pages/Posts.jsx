@@ -29,13 +29,13 @@ function Posts() {
         <Loading />
       ) : (
         <>
-          <Pagination skip={pageNum} setSkip={setPageNum} />
+          <Pagination skips={pageNum} setSkips={setPageNum} />
           <div className=" h-screen p-4 bg-main-color cursor-default">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {posts &&
                 posts.map((post, index) => <Post key={post.id} post={post} />)}
             </div>
-            <Pagination skip={pageNum} setSkip={setPageNum} />
+            <Pagination skips={pageNum} setSkips={setPageNum} />
           </div>
         </>
       )}
