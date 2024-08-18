@@ -1,13 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Loading from "../Loading/Loading";
 import { handelApi } from "../../JS/handelApi";
+import { AppContext } from "../../Providers/AppProvider";
+import useLocalStorage from "../../JS/handelLocalStorage";
 
 function Categories({ setCat, trigger , setTrigger}) {
   const [categories, setCategories] = useState([]);
+  const {cat} = useContext(AppContext);
   useEffect(() => {
     handelApi.getallData("products/categories", setCategories);
   }, []);
-
+  const localStorage = useLocalStorage("category",cat);
+  useEffect(() => {
+    if (localStorage) {
+      setCat(localStorage);
+    }
+  }, []);
   return (
     <>
       <aside
