@@ -1,34 +1,34 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { AppContext } from "../../Providers/AppProvider";
 
-function Pagination({skip, setSkip }) {
-    const [loading, setLoading] = useState(false);
+function Pagination() {
+  const {skips , setSkips} = useContext(AppContext);
 
     const handleClick = (newSkip) => {
-      if (newSkip < 0 || newSkip > 13) return; // Adjust max skip value based on your needs
-      setLoading(true);
-      setSkip(newSkip);
+      if (newSkip < 0 || newSkip > 13) return; 
+      setSkips(newSkip);
     };
 
     return (
       <div className="flex items-center justify-center space-x-2 pt-24 pb-10">
         <button
           className="px-4 py-2 btn-hover text-white rounded-lg disabled:bg-gray-300"
-          onClick={() => handleClick(skip - 1)}
-          disabled={skip === 0 || loading}
+          onClick={() => handleClick(skips - 1)}
+          disabled={skips === 0}
         >
           Previous
         </button>
 
         <div className="flex items-center space-x-1">
-          <p>{skip + 1}</p>
+          <p>{skips + 1}</p>
           <p>|</p>
-          <p>10</p> {/* Update based on the number of pages you have */}
+          <p>10</p> 
         </div>
 
         <button
           className="px-4 py-2 btn-hover text-white rounded-lg  disabled:bg-gray-300"
-          onClick={() => handleClick(skip + 1)}
-          disabled={skip === 13 || loading} // Adjust max skip value based on your needs
+          onClick={() => handleClick(skips + 1)}
+          disabled={skips === 13} 
         >
           Next
         </button>

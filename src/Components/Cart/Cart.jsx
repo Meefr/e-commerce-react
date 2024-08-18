@@ -1,14 +1,20 @@
-import React, { useEffect } from "react";
-import "./Cart.css";
-import Notification from "../Notifications/Notification";
+import { useContext, useEffect } from "react";
 import useLocalStorage from "../../JS/handelLocalStorage";
+import Notification from "../Notifications/Notification";
+import { AppContext } from "../../Providers/AppProvider";
 
-function Cart({ trigger, setTrigger, cart, setCart }) {
+function Cart() {
+  const { cart, setCart, cartBtn, setCartBtn } = useContext(AppContext);
+  
+  const notification = new Notification();
+  const localStorageCart = useLocalStorage("cart", cart);
+
   const deleteItem = (index) => {
     const tmpcart = [...cart];
     tmpcart.splice(index, 1);
     setCart(tmpcart);
   };
+
   const increaseQuantity = (index) => {
     const tmpcart = [...cart];
     if (tmpcart[index].stock >= tmpcart[index].quantity) {
@@ -17,67 +23,66 @@ function Cart({ trigger, setTrigger, cart, setCart }) {
     }
     setCart(tmpcart);
   };
+
   const decreaseQuantity = (index) => {
     const tmpcart = [...cart];
     if (tmpcart[index].quantity > 1) {
       tmpcart[index].quantity--;
       tmpcart[index].total -= tmpcart[index].price;
       setCart(tmpcart);
-    } else
-      notification.createNotification(
-        "error",
-        `${tmpcart[index].title}`,
-        () => {
-          deleteItem(index);
-        }
+    } else {
+      notification.createNotification("error", `${tmpcart[index].title}`, () =>
+        deleteItem(index)
       )();
+    }
   };
+
   const calcTotal = () => {
-    return cart.reduce((sum, product) => {
-      return sum + product.total;
-    }, 0);
+    return cart.reduce((sum, product) => sum + product.total, 0);
   };
-  const notification = new Notification();
-  
-  const localStorageCart = useLocalStorage("cart", cart);
+
   useEffect(() => {
     if (localStorageCart && cart.length === 0) {
       setCart(localStorageCart);
     }
   }, []);
+
   return (
     <div
-      className={`border border-white top-0  col-span-3 fixed bg-main-color z-50 h-screen overflow-auto w-full md:w-1/4 transform transition-transform duration-300 ease-in-out ${
-        trigger ? "translate-x-0" : "translate-x-full"
+      className={`border border-white top-0 col-span-3 fixed bg-main-color z-50 h-screen overflow-auto w-full md:w-1/4 transform transition-transform duration-300 ease-in-out ${
+        cartBtn ? "translate-x-0" : "translate-x-full"
       }`}
       id="side-bar"
-      style={{ right: 0 }} // Ensures the div is positioned on the right side of the screen
+      style={{ right: 0 }}
     >
       <div className="flex justify-center items-center p-3 bg-red-600 main-color text-2xl relative">
-        <h3>items</h3>
+        <h3>Items</h3>
         <div
           id="close-btn"
           className="cursor-pointer absolute top-0 left-0 bg-red-600 flex justify-center items-center m-1 w-8 h-8"
-          onClick={() => setTrigger(false)}
+          onClick={() => setCartBtn(false)}
         >
           <i className="fa-solid fa-xmark" aria-hidden="true" />
         </div>
       </div>
       <div className="container mx-auto">
         <div className="row overflow-y-auto">
-          {cart.length ? (
-            <div className="text-xl py-4 justify-center flex gap-3">
-              <p>total:</p>
+          {cart.length > 0 ? (
+            <div className="text-xl py-4 flex justify-center gap-3">
+              <p>Total:</p>
               <p>{calcTotal().toFixed(2)}</p>
             </div>
           ) : (
             <></>
           )}
           <div className="col-12 flex justify-center items-center p-3">
-            {cart.length ? (
-              <div class="border w-full p-4 " id="cart-list">
+            {cart.length > 0 ? (
+              <div className="border w-full p-4" id="cart-list">
                 {cart.map((c, i) => (
-                  <div className="flex justify-around items-center gap-2 relative p-4 border">
+                  <div
+                    key={c.id || i} 
+                    className="flex justify-around items-center gap-2 relative p-4 border"
+                  >
                     <div
                       className="absolute top-0 left-0 flex justify-center items-center w-8 h-8 cursor-pointer"
                       id={i}
@@ -89,9 +94,7 @@ function Cart({ trigger, setTrigger, cart, setCart }) {
                           notification.createNotification(
                             "error",
                             `${c.title}`,
-                            () => {
-                              deleteItem(i);
-                            }
+                            () => deleteItem(i)
                           )();
                         }}
                       />
@@ -100,7 +103,7 @@ function Cart({ trigger, setTrigger, cart, setCart }) {
                       <img
                         className="w-full cursor-pointer"
                         src={c.thumbnail}
-                        alt=""
+                        alt={c.title} 
                       />
                     </div>
                     <div className="flex flex-col gap-2 justify-center items-center flex-wrap">
@@ -128,7 +131,7 @@ function Cart({ trigger, setTrigger, cart, setCart }) {
               </div>
             ) : (
               <div className="border w-full p-4" id="cart-list">
-                <div>no data added!</div>
+                <div>No data added!</div>
               </div>
             )}
           </div>

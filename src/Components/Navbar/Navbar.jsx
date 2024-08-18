@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import PlayOnce from "../Notifications/AnimatedIcons";
+import { AppContext } from "../../Providers/AppProvider";
 
-function Navbar({
-  cat,
-  cart,
-  setCartBtn,
-  catBtn,
-  setCatBtn,
-  iconTrigger,
-  setIconTrigger,
-}) {
+function Navbar() {
+  const {
+    cat,
+    cart,
+    setCartBtn,
+    catBtn,
+    setCatBtn,
+    iconTrigger,
+    setIconTrigger,
+  } = useContext(AppContext);
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
