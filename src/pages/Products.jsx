@@ -61,7 +61,7 @@ function Products() {
   }, [setIconTrigger]);
   return (
     <AnimatedPage>
-      <Pagination setSkips={setSkips} skips={skips}/>
+      <Pagination setSkips={setSkips} skips={skips} />
       <Cart />
       <Categories setCat={setCat} trigger={catBtn} setTrigger={setCatBtn} />
       <div className="grid p-0">
@@ -71,7 +71,7 @@ function Products() {
           addItem={handelCart}
         />
       </div>
-      <Pagination />
+      <Pagination setSkips={setSkips} skips={skips} />
       {loading && <Loading />}
       {error && <p>Error: {error.message}</p>}
     </AnimatedPage>
