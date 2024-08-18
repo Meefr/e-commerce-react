@@ -17,7 +17,7 @@ function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="flex py-4 bg-rare-color text-gray-50 text-2xl justify-between px-6 sm:px-10 fixed w-screen z-30">
+    <div className="flex py-4 bg-rare-color align-baseline text-gray-50 text-2xl justify-between px-6 sm:px-10 fixed w-screen z-30">
       <div className="flex items-center">
         {iconTrigger ? (
           <i
@@ -30,18 +30,15 @@ function Navbar() {
         <Link to={`/`}>
           <span
             onClick={() => setIconTrigger(true)}
-            className="flex items-center"
+            className="flex items-center gap-2"
           >
-            <i
-              className="fa-solid fa-shop second-color pr-2"
-              aria-hidden="true"
-            ></i>
-            E-Shop
+            <PlayOnce imgname={"wired-outline-1459-old-shop.json"} />
+            Meefr-Shop
           </span>
         </Link>
       </div>
 
-      <div className="hidden md:flex space-x-4">
+      <div className="hidden md:flex space-x-4 justify-center align-baseline h-full">
         <Link to="/" className="hover:text-gray-300">
           Home
         </Link>
@@ -59,7 +56,7 @@ function Navbar() {
             className="text-gray-50 hover:text-gray-300"
             onClick={() => setMenuOpen(!menuOpen)}
           >
-            Menu
+            <PlayOnce imgname={"wired-outline-56-document.json"} />
           </button>
           {menuOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white text-gray-900 rounded-md shadow-lg">
