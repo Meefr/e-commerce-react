@@ -107,6 +107,12 @@ function App() {
         iconTrigger={menuIconTrigger}
         setIconTrigger={setMenuIconTrigger}
       />
+      <Cart
+        trigger={cartBtn}
+        setTrigger={setCartBtn}
+        cart={cart}
+        setCart={setCart}
+      />
       {loading ? (
         <Loading />
       ) : (
@@ -115,17 +121,7 @@ function App() {
             path="/"
             element={
               <AnimatedPage>
-                <Pagintaion
-                  handelApiCall={handelProjectsApiCall}
-                  skip={skips}
-                  setSkip={setSkips}
-                />
-                <Cart
-                  trigger={cartBtn}
-                  setTrigger={setCartBtn}
-                  cart={cart}
-                  setCart={setCart}
-                />
+                <Pagintaion skip={skips} setSkip={setSkips} />
                 <Categories
                   setCat={setCat}
                   trigger={catBtn}
@@ -138,11 +134,7 @@ function App() {
                     addItem={handelCart}
                   />
                 </div>
-                <Pagintaion
-                  handelApiCall={handelProjectsApiCall}
-                  skip={skips}
-                  setSkip={setSkips}
-                />
+                <Pagintaion skip={skips} setSkip={setSkips} />
               </AnimatedPage>
             }
           />
@@ -156,7 +148,7 @@ function App() {
             }
           />
           <Route path="*" element={<ErrorPage />} />
-          <Route path="/posts" element= {<Posts/>}/>
+          <Route path="/posts" element={<Posts />} />
         </Routes>
       )}
       {error && <p>Error: {error.message}</p>}

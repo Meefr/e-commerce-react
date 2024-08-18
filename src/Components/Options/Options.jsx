@@ -13,7 +13,7 @@ function Options() {
     }
   }, [dark]);
   return (
-    <div className="fixed right-0 md:right-20  top-20 z-40 ">
+    <div className="fixed right-0 md:right-20  top-20 z-40 cursor-pointer">
       <i
         className={
           dark

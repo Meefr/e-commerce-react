@@ -89,7 +89,7 @@ function Navbar({
         <ul className="">
           <li onClick={() => setCartBtn(true)}>
             <div className="relative">
-              <PlayOnce />
+              <PlayOnce imgname={"wired-flat-146-trolley.json"} />
               <span
                 className="absolute -top-2 -right-3 text-sm second-color font-bold"
                 id="cart-number"

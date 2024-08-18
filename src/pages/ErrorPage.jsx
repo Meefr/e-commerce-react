@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function ErrorPage() {
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
@@ -9,12 +11,12 @@ export default function ErrorPage() {
         <p className="text-lg text-gray-500 mt-2">
           Sorry, the page you are looking for does not exist.
         </p>
-        <a
-          href="/"
+        <Link
+          to={"/"}
           className="mt-6 inline-block bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors"
         >
           Go Back Home
-        </a>
+        </Link>
       </div>
     </div>
   );

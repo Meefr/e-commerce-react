@@ -1,9 +1,8 @@
 import { useEffect, useRef } from "react";
 import { Player } from "@lordicon/react/dist/player";
 
-const ICON = require("..//../assets/Icons/wired-flat-146-trolley.json");
-
-export default function PlayOnce() {
+export default function PlayOnce({ imgname,timer=1000,size=40 }) {
+  const ICON = require(`..//../assets/Icons/${imgname}`);
   const playerRef = useRef(ICON);
 
   useEffect(() => {
@@ -15,11 +14,11 @@ export default function PlayOnce() {
       <Player
         ref={playerRef}
         icon={ICON}
-        size={40}
+        size={size}
         onComplete={() => {
           setTimeout(() => {
-             playerRef.current?.playFromBeginning();
-          }, "1000"); 
+            playerRef.current?.playFromBeginning();
+          }, `${timer}`);
         }}
       />
     </div>

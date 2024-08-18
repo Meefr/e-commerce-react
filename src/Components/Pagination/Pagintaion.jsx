@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 
-function Pagination({ handelApiCall, skip, setSkip }) {
+function Pagination({skip, setSkip }) {
     const [loading, setLoading] = useState(false);
 
     const handleClick = (newSkip) => {
       if (newSkip < 0 || newSkip > 13) return; // Adjust max skip value based on your needs
       setLoading(true);
-      setSkip(newSkip, async () => {
-        await handelApiCall(newSkip);
-        setLoading(false);
-      });
+      setSkip(newSkip);
     };
 
     return (
