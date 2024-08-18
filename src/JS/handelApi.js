@@ -9,7 +9,6 @@ export const handelApi = {
     params = "",
   ) => {
     if (startLoading && typeof startLoading === "function") startLoading();
-
     try {      
       console.log(`${source}${endpoint}${params}`);
       
@@ -21,8 +20,7 @@ export const handelApi = {
       data = (data.products?data.products:data);
 
       if (success && typeof success === "function") success(data);
-      console.log(data);
-      
+
       return data;
     } catch (error) {
       console.error("Error fetching data:", error);

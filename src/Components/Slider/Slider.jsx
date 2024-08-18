@@ -41,6 +41,7 @@ const loadImage = (images)=>{
   ));
 }
 function Slider({ images }) {
+  
   return images ? (
     <div className="slide-container">
       <div className="slide-container">

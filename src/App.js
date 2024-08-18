@@ -27,8 +27,9 @@ function App() {
         <AnimatedPage>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/:productId" element={<ProductDetails />} />
             <Route path="/products" element={<Products />}></Route>
-            <Route path="/products/:productId" element={<ProductDetails />} />
+            <Route path="/:productId" element={<ProductDetails />} />
             <Route path="*" element={<ErrorPage />} />
             <Route path="/posts" element={<Posts />} />
           </Routes>

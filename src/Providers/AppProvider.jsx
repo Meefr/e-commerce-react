@@ -61,7 +61,7 @@ export const AppProvider = ({ children }) => {
       setError,
       () => setLoading(true),
       () => setLoading(false),
-      `?limit=12&skip=${12 * skips}`
+      `?limit=15&skip=${15 * skips}`
     );
   };
 
