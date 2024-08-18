@@ -7,7 +7,7 @@ export const AppProvider = ({ children }) => {
   const [projects, setProjects] = useState([]);
   const [cart, setCart] = useState([]);
   const [cartBtn, setCartBtn] = useState(false);
-  const [cat, setCat] = useState();
+  const [cat, setCat] = useState("");
   const [catBtn, setCatBtn] = useState(false);
   const [skips, setSkips] = useState(0);
   const [menuIconTrigger, setMenuIconTrigger] = useState(true);
