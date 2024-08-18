@@ -49,7 +49,7 @@ function Project({ product, addItem }) {
             >
               Add To Cart
             </button>
-            <Link to={`/${product.id}`}>
+            <Link to={`${product.id}`}>
               <button className="transition-transform duration-1000 transform translate-y-10 group-hover:translate-y-0 bg-red-800 text-white hover:text-red-700 border border-red-700 hover:bg-transparent focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 View Details
               </button>

@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Outlet, useParams } from "react-router-dom";
 import { handelApi } from "../../JS/handelApi";
 import Slider from "../Slider/Slider";
 import AnimatedPage from "../AnimatedPage/AnimatedPage";
+import { AppContext } from "../../Providers/AppProvider";
 
-function ProductDetails({ setCarts, iconTrigger}) {
+function ProductDetails() {
+  const { setCarts } = useContext(AppContext);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [productDetails, setProductDetails] = useState(null);
@@ -85,7 +87,7 @@ function ProductDetails({ setCarts, iconTrigger}) {
       </li>
     ));
   };
-  iconTrigger(false);
+  // iconTrigger(false);
   return (
     <AnimatedPage>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-20 px-5 md:px-20">
