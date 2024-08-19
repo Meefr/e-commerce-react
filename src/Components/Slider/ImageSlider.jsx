@@ -6,7 +6,7 @@ import "../../"
 const ImageSlider = ({ images, direction }) => {
   const animationClass =
     direction === "right" ? "animate-slideRight" : "animate-slideLeft";
-  const imageItems = images && images.length ? [...images, ...images] : [];
+  const imageItems = images;
   return (
     <div className="relative overflow-hidden">
       <div className={`flex space-x-4 ${animationClass} hover:pause-animation`}>
@@ -14,7 +14,7 @@ const ImageSlider = ({ images, direction }) => {
           <Link to={`/${image.id}`}>
             <div
               key={index}
-              className="relative flex-shrink-0 h-24 w-24 hover:bg-red-700 duration-500 rounded-xl"
+              className="relative flex-shrink-0 h-[150px] w-[150px] hover:bg-red-700 duration-500 rounded-xl"
             >
               <img
                 src={
