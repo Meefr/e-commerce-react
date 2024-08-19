@@ -43,7 +43,6 @@ function Navbar() {
         )}
         <Link to={`/`}>
           <span
-            onClick={() => setIconTrigger(true)}
             className="flex items-center gap-2"
           >
             <PlayOnce imgname={"wired-outline-1459-old-shop.json"} />
