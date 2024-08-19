@@ -31,7 +31,7 @@ function Project({ product, addItem }) {
           </div>
           <div className="flex flex-col gap-2 mt-2 ">
             <button
-              className="transition-transform duration-700 transform translate-y-10 group-hover:translate-y-0 text-white hover:text-white border border-white hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              className="transition-transform duration-700 transform translate-y-10 group-hover:translate-y-0 text-white hover:text-white border hover:border-red-700 border-white hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               data-product={JSON.stringify({
                 id: product.id,
                 title: product.title,
@@ -50,7 +50,7 @@ function Project({ product, addItem }) {
               Add To Cart
             </button>
             <Link to={`/${product.id}`}>
-              <button className="transition-transform duration-1000 transform translate-y-10 group-hover:translate-y-0 bg-red-800 text-white hover:text-red-700 border border-red-700 hover:bg-transparent focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+              <button className="transition-transform duration-1000 transform translate-y-10 group-hover:translate-y-0 bg-red-800 text-white hover:text-red-700 hover:bg-white border hover:border-white border-red-700 hover:bg-transparent focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 View Details
               </button>
             </Link>
