@@ -1,12 +1,13 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import React from "react";
+import { Outlet } from "react-router-dom";
+import AnimatedPage from "../../Components/AnimatedPage/AnimatedPage";
 
 function Auth() {
   return (
     <>
-        <Outlet/>
+        <Outlet />
     </>
-  )
+  );
 }
 
-export default Auth
+export default Auth;

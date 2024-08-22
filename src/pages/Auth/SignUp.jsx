@@ -1,8 +1,57 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import AnimatedPage from "../../Components/AnimatedPage/AnimatedPage";
+import { AppContext } from "../../Providers/AppProvider";
+import { ApiSignUp } from "../../JS/userData";
 
-function SignIn() {
+const Joi = require("joi");
+
+const schema = Joi.object({
+  username: Joi.string().alphanum().min(3).max(30).required(),
+  email: Joi.string().email({
+    minDomainSegments: 2,
+    tlds: { allow: ["com", "net"] },
+  }),
+  password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{8,30}$")),
+
+  confirmPass: Joi.ref("password"),
+});
+function SignUp() {
+    const [userData, setUSerData] = useState({
+      username: "",
+      email: "",
+      password: "",
+      confirmPass: "",
+    });
+    const [error, setError] = useState(null);
+    //useState
+    const { signUp } = useContext(AppContext);
+    const navigate = useNavigate();
+    const handleChange = (e) => {
+      setUSerData({ ...userData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+
+      console.log(schema.validate(userData));
+
+      const { error } = schema.validate(userData);
+
+      if (!error) {
+        const response = ApiSignUp({
+          username: userData.username,
+          email: userData.email,
+          password: userData.password,
+        });
+        if (response.success) {
+          signUp(response.user, navigate);
+          setError(null);
+        }
+      } else {
+        setError(error.message);
+      }
+    };
   return (
     <AnimatedPage>
       <section className="bg-white">
@@ -16,7 +65,7 @@ function SignIn() {
           </aside>
           <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
             <div className="max-w-xl lg:max-w-3xl">
-              <div className="block text-blue-600">
+              <a className="block text-blue-600" href="#">
                 <span className="sr-only">Home</span>
                 <svg
                   className="h-8 sm:h-10"
@@ -29,12 +78,52 @@ function SignIn() {
                     fill="currentColor"
                   />
                 </svg>
-              </div>
+              </a>
               <h1 className="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
                 Welcome to Meefr Store
               </h1>
               <p className="mt-4 leading-relaxed text-gray-500"></p>
+              {error && (
+                <div
+                  class="p-4 my-4  text-sm text-red-800 rounded-lg bg-red-50"
+                  role="alert"
+                >
+                  {error}
+                </div>
+              )}
               <form action="#" className="mt-8 grid grid-cols-6 gap-6">
+                <div className="col-span-6 sm:col-span-3">
+                  <label
+                    htmlFor="FirstName"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    id="FirstName"
+                    name="first_name"
+                    value={userData.firstName}
+                    onChange={handleChange}
+                    className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                  />
+                </div>
+                <div className="col-span-6 sm:col-span-3">
+                  <label
+                    htmlFor="LastName"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    id="LastName"
+                    name="last_name"
+                    value={userData.lastName}
+                    onChange={handleChange}
+                    className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                  />
+                </div>
                 <div className="col-span-6">
                   <label
                     htmlFor="Email"
@@ -46,6 +135,8 @@ function SignIn() {
                     type="email"
                     id="Email"
                     name="email"
+                    value={userData.email}
+                    onChange={handleChange}
                     className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                   />
                 </div>
@@ -60,18 +151,35 @@ function SignIn() {
                     type="password"
                     id="Password"
                     name="password"
+                    value={userData.password}
+                    onChange={handleChange}
                     className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                   />
                 </div>
-
+                <div className="col-span-6 sm:col-span-3">
+                  <label
+                    htmlFor="PasswordConfirmation"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Password Confirmation
+                  </label>
+                  <input
+                    type="password"
+                    id="PasswordConfirmation"
+                    name="password_confirmation"
+                    value={userData.confirmPass}
+                    onChange={handleChange}
+                    className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                  />
+                </div>
                 <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
                   <button className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
-                    Login
+                    Create an account
                   </button>
                   <p className="mt-4 text-sm text-gray-500 sm:mt-0">
-                    Don't have account?
-                    <Link to={"/auth/signin"}>
-                      <div className="text-gray-700 underline">SignUp</div>
+                    Already have an account?
+                    <Link to={"/auth"}>
+                      <div className="text-gray-700 underline">Log in</div>
                     </Link>
                   </p>
                 </div>
@@ -84,4 +192,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default SignUp;

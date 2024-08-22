@@ -18,43 +18,40 @@ import Home from "./pages/Home";
 import { AppContext, AppProvider } from "./Providers/AppProvider";
 import Auth from "./pages/Auth/Auth";
 import SignIn from "./pages/Auth/SignIn";
-import SignOut from "./pages/Auth/SignOut";
+import SignUp from "./pages/Auth/SignUp";
 
 function App() {
   const { isLogin, setIsLogin } = useContext(AppContext);
   return (
-      <Router basename="/e-commerce-react">
-        {isLogin ? (
-          <>
-            <Options />
-            <Navbar />
-            <Cart />
-            <AnimatedPage>
-              <Routes>
-                <Route path="/" element={<Home />} />
-
-                <Route path="/:productId" element={<ProductDetails />} />
-                <Route path="/products" element={<Products />}></Route>
-                <Route
-                  path="/products/:productId"
-                  element={<ProductDetails />}
-                />
-                <Route path="*" element={<ErrorPage />} />
-                <Route path="/posts" element={<Posts />} />
-              </Routes>
-            </AnimatedPage>
-          </>
-        ) : (
+    <Router basename="/e-commerce-react">
+      {isLogin ? (
+        <>
+          <Options />
+          <Navbar />
+          <Cart />
           <AnimatedPage>
             <Routes>
-              <Route path="/auth" element={<Auth />}>
-                <Route path="" element={<SignIn />} />
-                <Route path="signin" element={<SignOut />} />
-              </Route>
+              <Route path="/" element={<Home />} />
+
+              <Route path="/:productId" element={<ProductDetails />} />
+              <Route path="/products" element={<Products />}></Route>
+              <Route path="/products/:productId" element={<ProductDetails />} />
+              <Route path="*" element={<ErrorPage />} />
+              <Route path="/posts" element={<Posts />} />
             </Routes>
           </AnimatedPage>
-        )}
-      </Router>
+        </>
+      ) : (
+        <AnimatedPage>
+          <Routes>
+            <Route path="/auth" element={<Auth />}>
+              <Route path="" element={<SignIn />} />
+              <Route path="signin" element={<SignUp />} />
+            </Route>
+          </Routes>
+        </AnimatedPage>
+      )}
+    </Router>
   );
 }
 
