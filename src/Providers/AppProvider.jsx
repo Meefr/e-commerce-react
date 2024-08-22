@@ -13,8 +13,8 @@ export const AppProvider = ({ children }) => {
   const [menuIconTrigger, setMenuIconTrigger] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [iconTrigger, setIconTrigger] = useState(false)
-
+  const [iconTrigger, setIconTrigger] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
   const handelCart = async (productId) => {
     try {
       const tempCart = [...cart];
@@ -105,7 +105,9 @@ export const AppProvider = ({ children }) => {
         handelCart,
         handelProjectsApiCall,
         setIconTrigger,
-        iconTrigger
+        iconTrigger,
+        isLogin,
+        setIsLogin,
       }}
     >
       {children}
