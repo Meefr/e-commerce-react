@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react";
 
-function Input({ label , type }) {
+function CustomInput({ label, type, name, value, onChange, className, error }) {
   return (
     <div className="col-span-6 sm:col-span-3">
       <label
@@ -19,4 +19,4 @@ function Input({ label , type }) {
   );
 }
 
-export default Input
+export default CustomInput;

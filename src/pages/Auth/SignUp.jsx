@@ -3,6 +3,8 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import AnimatedPage from "../../Components/AnimatedPage/AnimatedPage";
 import { AppContext } from "../../Providers/AppProvider";
 import { ApiSignUp } from "../../JS/userData";
+import { Input } from "@material-tailwind/react";
+import CustomInput from "../../Components/Input";
 
 const Joi = require("joi");
 
@@ -17,7 +19,50 @@ const schema = Joi.object({
   confirmPass: Joi.ref("password"),
 });
 function SignUp() {
-  const [errors, setErrors] = useState();
+  const [userData, setUSerData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPass: "",
+  });
+  const [errors, setErrors] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confrimPass: "",
+  });
+
+  const [error, setError] = useState(null);
+  //useState
+  const { signUp } = useContext(AppContext);
+  const navigate = useNavigate();
+  const handleChange = (e) => {
+    setUSerData({ ...userData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log(schema.validate(userData));
+
+    const { error } = schema.validate(userData);
+
+    if (!error) {
+      const response = ApiSignUp({
+        username: userData.username,
+        email: userData.email,
+        password: userData.password,
+      });
+      if (response.success) {
+        ApiSignUp(userData.username, userData.email, userData.password);
+        navigate("/auth");
+        setError(null);
+      }
+    } else {
+      setError(error.message);
+    }
+  };
+
   const inputs = [
     {
       label: "Username",
@@ -70,42 +115,7 @@ function SignUp() {
       error: errors.username,
     },
   ];
-  const [userData, setUSerData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPass: "",
-  });
-  const [error, setError] = useState(null);
-  //useState
-  const { signUp } = useContext(AppContext);
-  const navigate = useNavigate();
-  const handleChange = (e) => {
-    setUSerData({ ...userData, [e.target.name]: e.target.value });
-  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    console.log(schema.validate(userData));
-
-    const { error } = schema.validate(userData);
-
-    if (!error) {
-      const response = ApiSignUp({
-        username: userData.username,
-        email: userData.email,
-        password: userData.password,
-      });
-      if (response.success) {
-        ApiSignUp(userData.username, userData.email, userData.password);
-        navigate("/auth");
-        setError(null);
-      }
-    } else {
-      setError(error.message);
-    }
-  };
   return (
     <AnimatedPage>
       <section className="bg-white">
@@ -146,70 +156,11 @@ function SignUp() {
                 </div>
               )}
               <form action="#" className="mt-8 grid grid-cols-6 gap-6">
-                <div className="col-span-6 sm:col-span-3">
-                  <label
-                    htmlFor="useName"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Username
-                  </label>
-                  <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    value={userData.username}
-                    onChange={handleChange}
-                    className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                  />
-                </div>
-                <div className="col-span-6">
-                  <label
-                    htmlFor="Email"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="Email"
-                    name="email"
-                    value={userData.email}
-                    onChange={handleChange}
-                    className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                  />
-                </div>
-                <div className="col-span-6 sm:col-span-3">
-                  <label
-                    htmlFor="Password"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    id="Password"
-                    name="password"
-                    value={userData.password}
-                    onChange={handleChange}
-                    className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                  />
-                </div>
-                <div className="col-span-6 sm:col-span-3">
-                  <label
-                    htmlFor="PasswordConfirmation"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Password Confirmation
-                  </label>
-                  <input
-                    type="password"
-                    id="PasswordConfirmation"
-                    name="confirmPass"
-                    value={userData.confirmPass}
-                    onChange={handleChange}
-                    className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                  />
-                </div>
+                {inputs.map((input) => {
+                  console.log(input);
+
+                  return <CustomInput {...input} />;
+                })}
                 <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
                   <button
                     onClick={handleSubmit}
