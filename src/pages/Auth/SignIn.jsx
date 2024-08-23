@@ -1,9 +1,33 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import AnimatedPage from "../../Components/AnimatedPage/AnimatedPage";
+import { signin } from "../../JS/userData";
+import { AppContext } from "../../Providers/AppProvider";
+
 
 function SignIn() {
-  return (
+
+  const {saveUser}= useContext(AppContext)
+  const navigate = useNavigate();
+  const [userData, setUSerData] = useState({
+    email: "",
+    password: "",
+    });
+    const handleChange = (e) => {
+      setUSerData({ ...userData, [e.target.name]: e.target.value });
+    };
+    const handelSignin = async () => {  // Make the function async if `signin` is a promise
+    
+      const res = await signin(userData.email, userData.password); // Await the signin if it's a promise
+      console.log(res);
+    
+      if (res.success) {
+        saveUser(userData, navigate);
+      } else {
+        alert("Data is not correct");
+      }
+    };    
+  return(
     <AnimatedPage>
       <section className="bg-white">
         <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
@@ -46,6 +70,7 @@ function SignIn() {
                     type="email"
                     id="Email"
                     name="email"
+                    onChange={handleChange}
                     className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                   />
                 </div>
@@ -61,16 +86,19 @@ function SignIn() {
                     id="Password"
                     name="password"
                     className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                    onChange={handleChange }
                   />
                 </div>
 
                 <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-                  <button className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
+                  <button 
+                  onClick={handelSignin}
+                  className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
                     Login
                   </button>
                   <p className="mt-4 text-sm text-gray-500 sm:mt-0">
                     Don't have account?
-                    <Link to={"/auth/signin"}>
+                    <Link to={"/auth/signup"}>
                       <div className="text-gray-700 underline">SignUp</div>
                     </Link>
                   </p>
@@ -82,6 +110,7 @@ function SignIn() {
       </section>
     </AnimatedPage>
   );
+  
 }
 
 export default SignIn;

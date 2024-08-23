@@ -9,20 +9,22 @@ export const AppProvider = ({ children }) => {
 
   //hooks
 
-  const signUp = useCallback(
+  const saveUser = useCallback(
     (user, navigate) => {
       localStorage.setItem("auth", JSON.stringify(user));
       setUser(user);
       navigate("/");
+      setIsLogin(true);
     },
-    [user]
+    []
   );
+  
 
   const logOut = useCallback(
     (navigate) => {
       localStorage.removeItem("auth");
       setUser(null);
-      navigate("/");
+      navigate("/auth");
     },
     [user]
   );
@@ -113,7 +115,7 @@ export const AppProvider = ({ children }) => {
     <AppContext.Provider
       value={{
         user,
-        signUp,
+        saveUser,
         logOut,
         projects,
         setProjects,

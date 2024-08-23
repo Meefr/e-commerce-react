@@ -17,41 +17,95 @@ const schema = Joi.object({
   confirmPass: Joi.ref("password"),
 });
 function SignUp() {
-    const [userData, setUSerData] = useState({
-      username: "",
-      email: "",
-      password: "",
-      confirmPass: "",
-    });
-    const [error, setError] = useState(null);
-    //useState
-    const { signUp } = useContext(AppContext);
-    const navigate = useNavigate();
-    const handleChange = (e) => {
-      setUSerData({ ...userData, [e.target.name]: e.target.value });
-    };
+  const [errors, setErrors] = useState();
+  const inputs = [
+    {
+      label: "Username",
+      type: "text",
+      name: "username",
+      value: userData.username,
+      onChange: handleChange,
+      className:
+        "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
+      error: errors.username,
+    },
+    {
+      label: "Email",
+      type: "text",
+      name: "email",
+      value: userData.email,
+      onChange: handleChange,
+      className:
+        "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
+      error: errors.email,
+    },
+    {
+      label: "Password",
+      type: "text",
+      name: "password",
+      value: userData.password,
+      onChange: handleChange,
+      className:
+        "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
+      error: errors.password,
+    },
+    {
+      label: "Confirm Password",
+      type: "text",
+      name: "confirmPass",
+      value: userData.confirmPass,
+      onChange: handleChange,
+      className:
+        "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
+      error: errors.confirmPass,
+    },
+    {
+      label: "Username",
+      type: "text",
+      name: "username",
+      value: userData.username,
+      onChange: handleChange,
+      className:
+        "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
+      error: errors.username,
+    },
+  ];
+  const [userData, setUSerData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPass: "",
+  });
+  const [error, setError] = useState(null);
+  //useState
+  const { signUp } = useContext(AppContext);
+  const navigate = useNavigate();
+  const handleChange = (e) => {
+    setUSerData({ ...userData, [e.target.name]: e.target.value });
+  };
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-      console.log(schema.validate(userData));
+    console.log(schema.validate(userData));
 
-      const { error } = schema.validate(userData);
+    const { error } = schema.validate(userData);
 
-      if (!error) {
-        const response = ApiSignUp({
-          username: userData.username,
-          email: userData.email,
-          password: userData.password,
-        });
-        if (response.success) {
-          signUp(response.user, navigate);
-          setError(null);
-        }
-      } else {
-        setError(error.message);
+    if (!error) {
+      const response = ApiSignUp({
+        username: userData.username,
+        email: userData.email,
+        password: userData.password,
+      });
+      if (response.success) {
+        ApiSignUp(userData.username, userData.email, userData.password);
+        navigate("/auth");
+        setError(null);
       }
-    };
+    } else {
+      setError(error.message);
+    }
+  };
   return (
     <AnimatedPage>
       <section className="bg-white">
@@ -94,32 +148,16 @@ function SignUp() {
               <form action="#" className="mt-8 grid grid-cols-6 gap-6">
                 <div className="col-span-6 sm:col-span-3">
                   <label
-                    htmlFor="FirstName"
+                    htmlFor="useName"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    First Name
+                    Username
                   </label>
                   <input
                     type="text"
-                    id="FirstName"
-                    name="first_name"
-                    value={userData.firstName}
-                    onChange={handleChange}
-                    className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                  />
-                </div>
-                <div className="col-span-6 sm:col-span-3">
-                  <label
-                    htmlFor="LastName"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    id="LastName"
-                    name="last_name"
-                    value={userData.lastName}
+                    id="username"
+                    name="username"
+                    value={userData.username}
                     onChange={handleChange}
                     className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                   />
@@ -166,14 +204,18 @@ function SignUp() {
                   <input
                     type="password"
                     id="PasswordConfirmation"
-                    name="password_confirmation"
+                    name="confirmPass"
                     value={userData.confirmPass}
                     onChange={handleChange}
                     className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                   />
                 </div>
                 <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-                  <button className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
+                  <button
+                    onClick={handleSubmit}
+                    type="button"
+                    className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+                  >
                     Create an account
                   </button>
                   <p className="mt-4 text-sm text-gray-500 sm:mt-0">

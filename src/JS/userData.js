@@ -3,22 +3,16 @@ const users = [
     username: "Ahmed Shaaban",
     email: "ahm@gmail.com",
     password: "12345678",
-    firstName: "Ahmed",
-    lastName: "Shaaban",
   },
   {
     username: "Nada Taha",
     email: "nada@gmail.com",
     password: "12345678",
-    firstName: "Nada",
-    lastName: "Taha",
   },
   {
     username: "Mohamed Essam",
     email: "mo@gmail.com",
     password: "12345678",
-    firstName: "Mohamed",
-    lastName: "Essam",
   },
 ];
 

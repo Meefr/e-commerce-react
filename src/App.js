@@ -46,7 +46,7 @@ function App() {
           <Routes>
             <Route path="/auth" element={<Auth />}>
               <Route path="" element={<SignIn />} />
-              <Route path="signin" element={<SignUp />} />
+              <Route path="signup" element={<SignUp />} />
             </Route>
           </Routes>
         </AnimatedPage>
