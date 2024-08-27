@@ -1,23 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import AnimatedPage from "../../Components/AnimatedPage/AnimatedPage";
 import { AppContext } from "../../Providers/AppProvider";
 import { ApiSignUp } from "../../JS/userData";
 import { Input } from "@material-tailwind/react";
 import CustomInput from "../../Components/Input";
+import { mapValidationToState } from "../../JS/validation";
 
-const Joi = require("joi");
-
-const schema = Joi.object({
-  username: Joi.string().alphanum().min(3).max(30).required(),
-  email: Joi.string().email({
-    minDomainSegments: 2,
-    tlds: { allow: ["com", "net"] },
-  }),
-  password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{8,30}$")),
-
-  confirmPass: Joi.ref("password"),
-});
+const isStateEmpty = (state) => {
+  return Object.keys(state).some((key) => !state[key]);
+};
 function SignUp() {
   const [userData, setUSerData] = useState({
     username: "",
@@ -25,96 +17,100 @@ function SignUp() {
     password: "",
     confirmPass: "",
   });
-  const [errors, setErrors] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confrimPass: "",
-  });
+  const [errors, setErrors] = useState(null);
+  const [disabled, setDisabled] = useState(true);
 
-  const [error, setError] = useState(null);
+  useEffect(() => {
+    if (!isStateEmpty(userData) && !errors) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [userData, errors]);
   //useState
   const { signUp } = useContext(AppContext);
   const navigate = useNavigate();
-  const handleChange = (e) => {
-    setUSerData({ ...userData, [e.target.name]: e.target.value });
-  };
+  const handleChange = useCallback(
+    (e) => {
+      const errorsObject = mapValidationToState({
+        ...userData,
+        [e.target.name]: e.target.value,
+      });
+      setErrors(errorsObject);
+      setUSerData({ ...userData, [e.target.name]: e.target.value });
+    },
+    [userData]
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log(schema.validate(userData));
-
-    const { error } = schema.validate(userData);
-
-    if (!error) {
+    setErrors(null);
+    if (!errors) {
       const response = ApiSignUp({
         username: userData.username,
         email: userData.email,
         password: userData.password,
       });
       if (response.success) {
-        ApiSignUp(userData.username, userData.email, userData.password);
-        navigate("/auth");
-        setError(null);
-      }
-    } else {
-      setError(error.message);
+        
+        // signUp(response.user, navigate);
+        navigate('/')
+      } 
     }
   };
 
-  const inputs = [
-    {
-      label: "Username",
-      type: "text",
-      name: "username",
-      value: userData.username,
-      onChange: handleChange,
-      className:
-        "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
-      error: errors.username,
-    },
-    {
-      label: "Email",
-      type: "text",
-      name: "email",
-      value: userData.email,
-      onChange: handleChange,
-      className:
-        "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
-      error: errors.email,
-    },
-    {
-      label: "Password",
-      type: "text",
-      name: "password",
-      value: userData.password,
-      onChange: handleChange,
-      className:
-        "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
-      error: errors.password,
-    },
-    {
-      label: "Confirm Password",
-      type: "text",
-      name: "confirmPass",
-      value: userData.confirmPass,
-      onChange: handleChange,
-      className:
-        "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
-      error: errors.confirmPass,
-    },
-    {
-      label: "Username",
-      type: "text",
-      name: "username",
-      value: userData.username,
-      onChange: handleChange,
-      className:
-        "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
-      error: errors.username,
-    },
-  ];
+  const inputs = useMemo(
+    () => [
+      {
+        label: "Username",
+        type: "text",
+        name: "username",
+        value: userData.username,
+        onChange: handleChange,
+        className:
+          "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
+        error: errors?.username,
+      },
+      {
+        label: "Email",
+        type: "email",
+        name: "email",
+        value: userData.email,
+        onChange: handleChange,
+        className:
+          "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
+        error: errors?.email,
+      },
+      {
+        label: "Password",
+        type: "password",
+        name: "password",
+        value: userData.password,
+        onChange: handleChange,
+        className:
+          "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
+        error: errors?.password,
+      },
+      {
+        label: "Confirm Password",
+        type: "password",
+        name: "confirmPass",
+        value: userData.confirmPass,
+        onChange: handleChange,
+        className:
+          "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
+        error: errors?.confirmPass,
+      },
+    ],
+    [
+      userData.username,
+      userData.password,
+      userData.email,
+      userData.confirmPass,
+      errors,
+      handleChange,
+    ]
+  );
 
   return (
     <AnimatedPage>
@@ -147,18 +143,9 @@ function SignUp() {
                 Welcome to Meefr Store
               </h1>
               <p className="mt-4 leading-relaxed text-gray-500"></p>
-              {error && (
-                <div
-                  class="p-4 my-4  text-sm text-red-800 rounded-lg bg-red-50"
-                  role="alert"
-                >
-                  {error}
-                </div>
-              )}
-              <form action="#" className="mt-8 grid grid-cols-6 gap-6">
+              
+              <form action="#" className="mt-8 grid grid-cols-12 gap-6">
                 {inputs.map((input) => {
-                  console.log(input);
-
                   return <CustomInput {...input} />;
                 })}
                 <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
@@ -171,7 +158,7 @@ function SignUp() {
                   </button>
                   <p className="mt-4 text-sm text-gray-500 sm:mt-0">
                     Already have an account?
-                    <Link to={"/auth"}>
+                    <Link to={"/"}>
                       <div className="text-gray-700 underline">Log in</div>
                     </Link>
                   </p>

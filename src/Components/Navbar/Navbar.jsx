@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Navbar.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import PlayOnce from "../Notifications/AnimatedIcons";
 import { AppContext } from "../../Providers/AppProvider";
 
@@ -27,9 +27,12 @@ function Navbar() {
     setCatBtn,
     iconTrigger,
     setIconTrigger,
-  } = useContext(AppContext);
-  const [menuOpen, setMenuOpen] = useState(false);
+    user,
+    logOut,
+  } = useContext(AppContext); 
+    const navigate = useNavigate();
 
+  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <div className="flex py-4 bg-rare-color align-baseline text-gray-50 text-2xl justify-between px-6 sm:px-10 fixed w-screen z-30">
       <div className="flex items-center">
@@ -42,9 +45,7 @@ function Navbar() {
           ""
         )}
         <Link to={`/`}>
-          <span
-            className="flex items-center gap-2"
-          >
+          <span className="flex items-center gap-2">
             <PlayOnce imgname={"wired-outline-1459-old-shop.json"} />
             Meefr-Shop
           </span>
@@ -121,6 +122,7 @@ function Navbar() {
             </div>
           )}
         </div>
+        <p onClick={() => logOut(navigate)}>{user?.username}</p>
 
         <ul className="">
           <li onClick={() => setCartBtn(true)}>

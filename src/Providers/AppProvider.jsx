@@ -9,22 +9,19 @@ export const AppProvider = ({ children }) => {
 
   //hooks
 
-  const saveUser = useCallback(
-    (user, navigate) => {
-      localStorage.setItem("auth", JSON.stringify(user));
-      setUser(user);
-      navigate("/");
-      setIsLogin(true);
-    },
-    []
-  );
-  
+  const saveUser = useCallback((user, navigate) => {
+    localStorage.setItem("auth", JSON.stringify(user));
+    setUser(user);
+    navigate("/");
+    setIsLogin(true);
+  }, []);
 
   const logOut = useCallback(
     (navigate) => {
       localStorage.removeItem("auth");
       setUser(null);
-      navigate("/auth");
+      setIsLogin(false);
+      navigate("/");
     },
     [user]
   );
@@ -32,6 +29,7 @@ export const AppProvider = ({ children }) => {
     const authUser = localStorage.getItem("auth");
     if (authUser) {
       setUser(JSON.parse(authUser));
+      setIsLogin(true);
     }
   }, []);
   const [projects, setProjects] = useState([]);

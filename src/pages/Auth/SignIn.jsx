@@ -16,13 +16,13 @@ function SignIn() {
     const handleChange = (e) => {
       setUSerData({ ...userData, [e.target.name]: e.target.value });
     };
-    const handelSignin = async () => {  // Make the function async if `signin` is a promise
+    const handelSignin = async () => { 
     
-      const res = await signin(userData.email, userData.password); // Await the signin if it's a promise
+      const res = await signin(userData); 
       console.log(res);
     
       if (res.success) {
-        saveUser(userData, navigate);
+        saveUser(res.user, navigate);
       } else {
         alert("Data is not correct");
       }
@@ -93,12 +93,13 @@ function SignIn() {
                 <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
                   <button 
                   onClick={handelSignin}
+                  type="button"
                   className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
                     Login
                   </button>
                   <p className="mt-4 text-sm text-gray-500 sm:mt-0">
                     Don't have account?
-                    <Link to={"/auth/signup"}>
+                    <Link to={"/signup"}>
                       <div className="text-gray-700 underline">SignUp</div>
                     </Link>
                   </p>

@@ -44,7 +44,7 @@ function App() {
       ) : (
         <AnimatedPage>
           <Routes>
-            <Route path="/auth" element={<Auth />}>
+            <Route path="" element={<Auth />}>
               <Route path="" element={<SignIn />} />
               <Route path="signup" element={<SignUp />} />
             </Route>

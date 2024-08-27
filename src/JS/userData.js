@@ -20,7 +20,7 @@ export function ApiSignUp({ username, email, password }) {
   //vlaidiation
   const isExist = users.find((user) => user.email === email);
   if (isExist) return { error: "this Email is already exist", status: 401 };
-  users.push({ username, email, password });
+  users.push({ username, email, password });  
   return {
     success: "success",
     status: 200,
@@ -28,11 +28,12 @@ export function ApiSignUp({ username, email, password }) {
   };
 }
 
-export function signin({ email, password }) {
+export function signin({ email, password }) {  
   const user = users.find((user) => user.email === email);
   if (!user) return { error: "Not Found", status: 404 };
 
   if (user.password === password) {
+    
     return { success: "success", status: 200, user };
   } else {
     return {
